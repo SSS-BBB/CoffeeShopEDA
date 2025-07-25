@@ -62,3 +62,13 @@ DELETE
 FROM orders_staging
 WHERE row_id = 60 AND order_id = "ORD041";
 ```
+
+### Standardize the Data
+We want to make sure that the same data has the same values.
+
+Find unique values for each column in every tables. Use ORDER BY to make similar values being near to each others, so we can see and standardize them.
+```
+SELECT DISTINCT ing_name
+FROM ingredients_staging
+ORDER BY 1;
+```

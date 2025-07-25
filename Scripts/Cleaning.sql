@@ -51,6 +51,23 @@ WHERE row_id = 60 AND order_id = "ORD041";
 
 
 -- Standardize the Data
+SELECT *
+FROM ingredients_staging;
+
+-- Change column name
+ALTER TABLE ingredients_staging
+RENAME COLUMN ing_weight to ing_amount;
+
+ALTER TABLE ingredients_staging
+RENAME COLUMN ing_meas to ing_unit;
+
+-- Check uniques data for similar values
+SELECT *
+FROM staff_staging;
+
+SELECT DISTINCT position
+FROM staff_staging
+ORDER BY 1;
 
 
 
