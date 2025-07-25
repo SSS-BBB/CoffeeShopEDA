@@ -1,15 +1,15 @@
--- DATA FROM: https://www.kaggle.com/datasets/viramatv/coffee-shop-data?select=items.csv
+-- DATA FROM: https://www.kaggle.com/datasets/viramatv/coffee-shop-data
 
 -- Stage Database
-CREATE TABLE staff_staging
-LIKE staff;
+CREATE TABLE orders_staging
+LIKE orders;
 
-INSERT staff_staging
+INSERT orders_staging
 SELECT *
-FROM staff;
+FROM orders;
 
 SELECT *
-FROM staff_staging;
+FROM orders_staging;
 
 -- Check Duplicates
 SELECT * FROM staff_staging;
@@ -44,7 +44,7 @@ UPDATE orders_staging
 SET quantity = 2
 WHERE row_id = 59 AND order_id = "ORD041";
 
--- Delete orders duplicated
+-- Delete duplicated orders
 DELETE
 FROM orders_staging
 WHERE row_id = 60 AND order_id = "ORD041";
