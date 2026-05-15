@@ -100,3 +100,30 @@ UPDATE orders_staging
 SET in_or_out = ""
 WHERE order_id = "ORD006" AND item_id = "It016";
 ```
+
+## Basic EDA
+### Profit Per Unit for Each Items
+
+Each Items have recipe and each recipes have required ingredients which are the cost of each items. We wanted to know the price of all the required ingredients to make a unit of each items, and calculate profit per unit. First we calculate price per unit for each ingredients, then calculate each ingredients cost for each recipes, sum ingredients price to get the total cost for each recipes, and calculate profit per unit from item_price - recipe_cost
+
+**Top 5 Most Profitable Items**
+
+```sql
+SELECT *
+FROM items_staging_1
+ORDER BY item_profit_per_unit DESC
+LIMIT 5;
+```
+
+![Most Profitable Items](Images/most_profitable_items.png)
+
+**Top 5 Least Profitable Items**
+
+```sql
+SELECT *
+FROM items_staging_1
+ORDER BY item_profit_per_unit
+LIMIT 5;
+```
+
+![Least Profitable Items](Images/least_profitable_items.png)
