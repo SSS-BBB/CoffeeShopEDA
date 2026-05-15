@@ -1,5 +1,5 @@
 # CoffeeShopEDA
-You can see all the datas details at [https://www.kaggle.com/datasets/viramatv/coffee-shop-data](https://www.kaggle.com/datasets/viramatv/coffee-shop-data)
+You can see all the data details at [https://www.kaggle.com/datasets/viramatv/coffee-shop-data](https://www.kaggle.com/datasets/viramatv/coffee-shop-data)
 
 ## Create Staging Tables
 First, I created staging tables for every tables, so that I can alter tables without affecting the original tables.
@@ -10,7 +10,7 @@ Create new table with the same columns as the original.
 CREATE TABLE orders_staging LIKE orders;
 ```
 
-Insert all the datas from original table to new table.
+Insert all data from original table to new table.
 
 ```sql
 INSERT orders_staging
@@ -40,7 +40,7 @@ FROM check_duplicates
 WHERE row_num > 1;
 ```
 
-For orders_staging table some rows can have duplicated order_id(different items withing the same recipt). So we check duplicated by order_id and item_id.
+For orders_staging table some rows can have duplicated order_id(different items with the same recipt). So we check duplicated by order_id and item_id.
 
 ```sql
 WITH check_duplicates AS
@@ -56,7 +56,7 @@ WHERE c1.row_num = 1 AND c2.row_num > 1;
 
 Result
 ![Duplicated Order](/Images/duplicated_orders.png)
-As you can see ORD041 has two It011 withing the recipt, and it was created at the same time. So we will delete the duplicated row, and add the quantity by 1.
+As you can see ORD041 has two It011 within the recipt, and it was created at the same time. So we will delete the duplicated row, and add the quantity by 1.
 
 ```sql
 -- Update orders quantity
@@ -79,4 +79,24 @@ Find unique values for each column in every tables. Use ORDER BY to make similar
 SELECT DISTINCT ing_name
 FROM ingredients_staging
 ORDER BY 1;
+```
+
+### Null Values or Empty Values
+There are empty values at column in_and_out on table orders_staging. However those values are empty because there is a row with the same order_id but different item_id that already has in_and_out value, so there is no need to make it not empty as that would be redundant.
+
+See the same order_id within the same row
+```sql
+SELECT o1.order_id, o1.item_id, o1.in_or_out, o2.order_id, o2.item_id, o2.in_or_out
+FROM orders_staging o1
+JOIN orders_staging o2 ON o1.order_id = o2.order_id AND o1.item_id <> o2.item_id;
+```
+
+![Incosistent in_and_out Column](/Images/inconsistent_in_and_out.png)
+
+There is a cell that's suppose to be empty but is not. We already know that ORD006 is "in" from ORD006 with item_id It001, so in_and_out at ORD006 with item_id It016 should be empty.
+
+```sql
+UPDATE orders_staging
+SET in_or_out = ""
+WHERE order_id = "ORD006" AND item_id = "It016";
 ```

@@ -69,5 +69,31 @@ SELECT DISTINCT position
 FROM staff_staging
 ORDER BY 1;
 
+-- Null Values or Empty Values
+
+SHOW TABLES;
+
+SELECT o1.order_id, o1.item_id, o1.in_or_out, o2.order_id, o2.item_id, o2.in_or_out
+FROM orders_staging o1
+JOIN orders_staging o2 ON o1.order_id = o2.order_id AND o1.item_id <> o2.item_id;
+
+SELECT * FROM orders_staging
+WHERE order_id = "ORD006";
+
+UPDATE orders_staging
+SET in_or_out = ""
+WHERE order_id = "ORD006" AND item_id = "It016";
+
+SELECT * FROM staff_staging
+WHERE sal_per_hour IS NULL OR sal_per_hour = "";
+
+
+
+
+
+
+
+
+
 
 
