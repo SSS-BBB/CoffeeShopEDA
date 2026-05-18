@@ -104,7 +104,7 @@ WHERE order_id = "ORD006" AND item_id = "It016";
 ## Basic EDA
 ### Profit Per Unit for Each Items
 
-Each Items have recipe and each recipes have required ingredients which are the cost of each items. We wanted to know the price of all the required ingredients to make a unit of each items, and calculate profit per unit. First we calculate price per unit for each ingredients, then calculate each ingredients cost for each recipes, sum ingredients price to get the total cost for each recipes, and calculate profit per unit from item_price - recipe_cost
+Each Items has recipe and each recipes has required ingredients which are the cost of each items. We wanted to know the price of all the required ingredients to make a unit of each items, and calculate profit per unit. First we calculate price per unit for each ingredients, then calculate each ingredients cost for each recipes, sum ingredients price to get the total cost for each recipes, and calculate profit per unit from item_price - recipe_cost
 
 **Top 5 Most Profitable Items**
 
@@ -130,7 +130,7 @@ LIMIT 5;
 
 ### Items Ordered Quantity
 
-See how many times each items have been ordered. From orders_staging table we group by column item_id and sum up the quantity, then join with the table items_staging_1.
+See how many times each items has been ordered. From orders_staging table we group by column item_id and sum up the quantity, then join with the table items_staging_1.
 
 **Top 5 Most Ordered Item**
 
@@ -161,3 +161,14 @@ WHERE quantity_rank <= 5;
 ```
 
 ![Least Ordered Items](Images/least_ordered_items.png)
+
+### Staff Work Hours
+
+We want to know how much total hours each staff has to do. First we calculate work hours by substracting start_time from end_time in shift_staging table and join it with rota_staging table. Then group by staff_id to sum up work_hours, and join with staff_staging table. We can also calculate staff_earning by sal_per_hour * staff_work_hours.
+
+```sql
+SELECT *, sal_per_hour * staff_work_hours AS staff_earnings
+FROM staff_staging_1;
+```
+
+![Staff Work Hours And Earnings](Images/staff_work_hours.png)
