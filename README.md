@@ -127,3 +127,37 @@ LIMIT 5;
 ```
 
 ![Least Profitable Items](Images/least_profitable_items.png)
+
+### Items Ordered Quantity
+
+See how many times each items have been ordered. From orders_staging table we group by column item_id and sum up the quantity, then join with the table items_staging_1.
+
+**Top 5 Most Ordered Item**
+
+```sql
+WITH ordered_ranking AS
+(
+SELECT item_id, item_name, item_size, ordered_quantity, 
+dense_rank() OVER (ORDER BY ordered_quantity DESC) AS quantity_rank
+FROM items_staging_2
+)
+SELECT * FROM ordered_ranking
+WHERE quantity_rank <= 5;
+```
+
+![Most Ordered Items](Images/most_ordered_items.png)
+
+**Top 5 Least Ordered Item**
+
+```sql
+WITH ordered_ranking AS
+(
+SELECT item_id, item_name, item_size, ordered_quantity, 
+dense_rank() OVER (ORDER BY ordered_quantity) AS quantity_rank
+FROM items_staging_2
+)
+SELECT * FROM ordered_ranking
+WHERE quantity_rank <= 5;
+```
+
+![Least Ordered Items](Images/least_ordered_items.png)
