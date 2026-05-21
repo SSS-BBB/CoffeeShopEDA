@@ -172,3 +172,13 @@ FROM staff_staging_1;
 ```
 
 ![Staff Work Hours And Earnings](Images/staff_work_hours.png)
+
+### How much have we bought each ingredients?
+
+From all the ingredients that have been used for the orders, and the ingredients we have left in the inventory. We want to know how much have we used each ingredients. From how much ingredients we have left in the inventory and how much ingredients have been used, we can calculate the price that we bought each ingredients.
+
+```sql
+SELECT * FROM inventory_staging_1;
+```
+
+![Ingredients Bought Price](Images/ingredients_bought_price.png)
