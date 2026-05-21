@@ -182,3 +182,38 @@ SELECT * FROM inventory_staging_1;
 ```
 
 ![Ingredients Bought Price](Images/ingredients_bought_price.png)
+
+### Cost And Earning
+
+Calculate cost and earning from 2024-02-12 to 2024-02-17 (Monday - Saturday). We'll calculate staffs total payment and ingredients total cost, then calculate total earning that we got from each item's orders.
+
+**calculate total staffs payment**
+
+```sql
+SELECT SUM(sal_per_hour * staff_work_hours) AS staff_payment
+FROM staff_staging_1;
+```
+
+staff_payment = 960
+
+**calculate ingredients total cost**
+
+```sql
+SELECT ROUND(SUM(ing_bought_price), 4) AS ing_total_cost
+FROM inventory_staging_1;
+```
+
+ing_total_cost = 258.0169
+
+**calculate total earning**
+
+```sql
+SELECT ROUND(SUM(item_price * ordered_quantity), 4) AS item_total_earning
+FROM items_staging_2;
+```
+
+item_total_earning = 1857.45
+
+**calculate profit**
+
+profit = 1857.45 - (960 + 258.0169) = 639.4331
